@@ -1,0 +1,44 @@
+Project Description:
+
+This is a small part of the whole project and if it turns out good there will be oppurtunity for full contract.
+
+1. * A https JSON API server.
+
+This refers to a client / server model that transfers data in JSON, is secured via an SSL tunnel and can take multiple connections simultaneously.
+
+2. * To begin with, a single function but more to follow.
+
+3. * The first function is to simply accept the following input parameters: destinationAddress, amount, asset, paymentId
+
+This goes into detail on the previously mentioned first function, which will take a JSON string and parse out: destinationAddress, amount, asset, paymentId
+
+destinationAddress: Regular bitcoin address. You could use a function to verify if the address is a bitcoin address. http://rosettacode.org/wiki/Bitcoin/address_validation
+
+amount: long integer
+
+asset: asset names are alphanumeric strings. There are some rules in the way that the string needs to be formatted and there are two types of asset names: 1) Asset names which start with 'A' and the remaining characters are numeric, 2) Asset names which are only alphabetical but can only start with 'B'. You can find some information in the code here: https://github.com/CounterpartyXCP/counterpartyd/blob/master/lib/util.py#L355
+
+paymentID: string
+
+4. * The function call inserts into the following sqlite table structure:
+CREATE TABLE payments(blockId integer, sourceTxid string, sourceAddress string, destinationAddress string, outAsset string, outAmount integer, status string, lastUpdatedBlockId integer)
+
+column, value to insert
+
+blockId = 0
+
+sourceTxid = paymentId
+
+sourceAddress = value from a configuration file - this value is the address at which we store our customer's token to be distributed. It will be different per customer and probably different if a customer has different projects with us
+
+destinationAddress = destinationAddress
+
+outAsset = asset
+
+outAmount = amount
+
+status = 'authorized'
+
+lastUpdatedBlockId = 0
+
+5. *Support for OAuth/HMAC.1
