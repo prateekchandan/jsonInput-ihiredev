@@ -2,7 +2,6 @@ from django.forms import widgets
 from rest_framework import serializers
 from jsonInput.models import payments
 from hashlib import sha256
-from future.types import *
  
 digits58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
  
@@ -11,7 +10,7 @@ def decode_base58(bc, length):
     for char in bc:
         n = n * 58 + digits58.index(char)
     print type(n)
-    bcbytes = n.to_bytes(length, 'big')
+    bcbytes = ('%%0%dx' % (length << 1) % n).decode('hex')[-length:]
     return bcbytes[-4:] == sha256(sha256(bcbytes[:-4]).digest()).digest()[:4]
 
 def bitCoinUrl(value):
