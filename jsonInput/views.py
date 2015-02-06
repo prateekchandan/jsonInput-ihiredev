@@ -14,9 +14,9 @@ def addData(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        request.data['sourceTxid'] = request.data['paymentId']
-        request.data['outAsset'] = request.data['asset']
-        request.data['outAmount'] = request.data['amount']
+        #request.data['sourceTxid'] = request.data['paymentId']
+        #request.data['outAsset'] = request.data['asset']
+        #request.data['outAmount'] = request.data['amount']
         serializer = paymentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

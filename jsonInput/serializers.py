@@ -14,22 +14,23 @@ def decode_base58(bc, length):
     return bcbytes[-4:] == sha256(sha256(bcbytes[:-4]).digest()).digest()[:4]
 
 def bitCoinUrl(value):
-    #try:
-    check = decode_base58(value, 25)
-    #except Exception, e:
-    #    raise serializers.ValidationError('Invalid BItcoin URL.')
+    try:
+        check = decode_base58(value, 25)
+    except Exception, e:
+        raise serializers.ValidationError('Invalid BItcoin URL.')
     
     if check == False:
         raise serializers.ValidationError('Invalid BItcoin URL.')
     
 class paymentSerializer(serializers.Serializer):
     
+    amount = serializers.IntegerField(read_only=True)
     blockId = serializers.IntegerField(default=0 ,read_only=True  )
-    sourceTxid = serializers.CharField()
+    paymentId = serializers.CharField(source='sourceTxid')
     sourceAddress = serializers.CharField()
     destinationAddress = serializers.CharField(max_length=1000)
-    outAsset = serializers.CharField(validators=[bitCoinUrl])
-    outAmount = serializers.IntegerField()
+    asset = serializers.CharField(source='outAsset', validators=[bitCoinUrl])
+    amount = serializers.IntegerField(source='outAmount')
     status = serializers.CharField(default='authorized' ,read_only=True)
     lastUpdatedBlockId = serializers.IntegerField(default=0,read_only=True)
 
