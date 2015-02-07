@@ -1,0 +1,33 @@
+#Step One—Activate the SSL Module
+
+sudo a2enmod ssl
+
+#Step Two—Create a New Directory
+
+We need to create a new directory where we will store the server key and certificate
+
+sudo mkdir /etc/apache2/ssl 
+
+#Step Three—Create a Self Signed SSL Certificate
+
+When we request a new certificate, we can specify how long the certificate should remain valid by changing the 365 to the number of days we prefer. As it stands this certificate will expire after one year.
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/apache.key -out /etc/apache2/ssl/apache.crt
+
+#Step Four—Set Up the Certificate
+
+nano /etc/apache2/sites-available/default-ssl
+<Virtualhost *:443>
+
+SSLEngine on
+SSLCertificateFile /etc/apache2/ssl/apache.crt
+SSLCertificateKeyFile /etc/apache2/ssl/apache.key
+
+#Step Five—Activate the New Virtual Host
+
+Before the website that will come on the 443 port can be activated, we need to enable that Virtual Host:
+
+sudo a2ensite default-ssl
+
+#
+sudo service apache2 reload
