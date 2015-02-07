@@ -25,7 +25,7 @@ def bitCoinUrl(value):
     
 def alphaNumeric(value):
     regex = re.compile("^([A][0-9]+)$|^([B][A-Za-z]+)$")
-    if(regex.match(value))
+    if regex.match(value): 
         raise serializers.ValidationError('Asset not in Proper Form.')
 
 class paymentSerializer(serializers.Serializer):
@@ -35,7 +35,7 @@ class paymentSerializer(serializers.Serializer):
     paymentId = serializers.CharField(source='sourceTxid')
     sourceAddress = serializers.CharField()
     destinationAddress = serializers.CharField(max_length=1000,validators=[bitCoinUrl])
-    asset = serializers.CharField(source='outAsset',validators = [aplphaNumeric])
+    asset = serializers.CharField(source='outAsset',validators = [alphaNumeric])
     amount = serializers.IntegerField(source='outAmount')
     status = serializers.CharField(default='authorized' ,read_only=True)
     lastUpdatedBlockId = serializers.IntegerField(default=0,read_only=True)

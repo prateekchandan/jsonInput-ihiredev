@@ -37,7 +37,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'jsonInput'
+    'jsonInput',
+    'oauth_provider',
+    'provider',
+    'provider.oauth2',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -93,6 +96,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-    )
-
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.OAuth2Authentication',
+    ),
 }
