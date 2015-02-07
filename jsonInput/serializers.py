@@ -2,6 +2,7 @@ from django.forms import widgets
 from rest_framework import serializers
 from jsonInput.models import payments
 from hashlib import sha256
+import re
  
 digits58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
  
@@ -22,6 +23,11 @@ def bitCoinUrl(value):
     if check == False:
         raise serializers.ValidationError('Invalid BItcoin URL.')
     
+def alphaNumeric(value):
+    regex = re.compile("^([A][0-9]+)$|^([B][A-Za-z]+)$")
+    if(regex.match(value))
+        raise serializers.ValidationError('Asset not in Proper Form.')
+
 class paymentSerializer(serializers.Serializer):
     
     amount = serializers.IntegerField(read_only=True)
@@ -29,7 +35,7 @@ class paymentSerializer(serializers.Serializer):
     paymentId = serializers.CharField(source='sourceTxid')
     sourceAddress = serializers.CharField()
     destinationAddress = serializers.CharField(max_length=1000,validators=[bitCoinUrl])
-    asset = serializers.CharField(source='outAsset')
+    asset = serializers.CharField(source='outAsset',validators = [aplphaNumeric])
     amount = serializers.IntegerField(source='outAmount')
     status = serializers.CharField(default='authorized' ,read_only=True)
     lastUpdatedBlockId = serializers.IntegerField(default=0,read_only=True)
