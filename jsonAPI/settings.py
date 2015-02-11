@@ -38,9 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'jsonInput',
-    'oauth_provider',
-    'provider',
-    'provider.oauth2',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -92,12 +89,9 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        #'jsonInput.views.CheckPermission'
     ],
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'doac.contrib.rest_framework.authentication.DoacAuthentication',
     ),
 }
