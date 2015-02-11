@@ -10,6 +10,7 @@ from models import *
 import hashlib
 import hmac
 import base64
+from django.db.models import Q
 
 # Create your views here.
 @api_view(['POST','GET'])
@@ -59,8 +60,12 @@ class CheckPermission(permissions.BasePermission):
         except Exception, e:
             return False
 
-        User = AccessKeys.objects.get(userId = uname )#, AccessToken = token)
-             
+        try:
+            User =  AccessKeys.objects.get(userId = uname, AccessToken = token)#, AccessToken = token)
+            #User = AccessKeys.objects.get(userId = uname)
+        except Exception as e:
+            User = None
+
         if User is None:
             return False
 
@@ -69,7 +74,6 @@ class CheckPermission(permissions.BasePermission):
 
         newSign = MyHMAC(secretKey,data)
 
-        print newSign,sign
         if newSign != sign:
             return False
 
