@@ -37,7 +37,7 @@ def addData(request):
 
 
 def MyHMAC(key,data):
-    digest = hmac.new(str(key), msg=str(data), digestmod=hashlib.sha256).digest()
+    digest = hmac.new(str(key), msg=str(data), digestmod=hashlib.sha512).digest()
     signature = digest.encode("hex")
     return signature
     
