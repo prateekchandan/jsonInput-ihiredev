@@ -30,6 +30,7 @@ def addData(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
+        request.data["sourceAddress"] = request.META['HTTP_USERID'] + ":" + request.META['HTTP_ACCESSTOKEN']
         serializer = paymentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
