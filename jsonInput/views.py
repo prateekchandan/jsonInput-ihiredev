@@ -71,7 +71,8 @@ class CheckPermission(permissions.BasePermission):
         if request.method == 'GET':
             data = token
         else:
-            data = request.POST
+            data = request.data
+
 
         newSign = MyHMAC(secretKey,data)
 
