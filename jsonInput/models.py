@@ -10,7 +10,7 @@ class payments(models.Model):
     sourceAddress = models.TextField()
     destinationAddress = models.CharField(max_length=1000)
     outAsset = models.TextField(max_length=500)
-    outAmount = models.BigIntegerField()
+    outAmount = models.DecimalField()
     status = models.CharField(max_length=200)
     lastUpdatedBlockId = models.IntegerField()
     class Meta:
