@@ -51,8 +51,8 @@ class CheckPermission(permissions.BasePermission):
         try:
             sign = request.META['HTTP_AUTHORIZATION']
             date = request.META['HTTP_DATE']
-            uname = request.META['HTTP_USER_ID']
-            token = request.META['HTTP_ACCESS_TOKEN']
+            uname = request.META['HTTP_USERID']
+            token = request.META['HTTP_ACCESSTOKEN']
 
         except Exception as e:
             return False
