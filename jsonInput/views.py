@@ -56,7 +56,7 @@ class CheckPermission(permissions.BasePermission):
             token = request.META['HTTP_ACCESSTOKEN']
 
         except Exception as e:
-            return "Headers Not present properly"
+            return "Headers Not present properly "+e.message
         
         try:
             User =  AccessKeys.objects.get(userId = uname, AccessToken = token)
