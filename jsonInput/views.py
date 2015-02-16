@@ -18,11 +18,11 @@ import json
 def addData(request):
 
     permission = CheckPermission()
-    check = permission.has_permission(request,None)
-    if check == True:
+    
+    if permission.has_permission(request,None) == True:
         pass
     else:
-        raise PermissionDenied(check)
+        raise PermissionDenied("You don't have permission to access")
 
     if request.method == 'GET':
         snippets = payments.objects.all()
@@ -56,7 +56,7 @@ class CheckPermission(permissions.BasePermission):
             token = request.META['HTTP_ACCESSTOKEN']
 
         except Exception as e:
-            return "Headers Not present properly "+e.message
+            return False
         
         try:
             User =  AccessKeys.objects.get(userId = uname, AccessToken = token)
@@ -64,7 +64,7 @@ class CheckPermission(permissions.BasePermission):
             User = None
 
         if User is None:
-            return "Invalid userId / AccessToken"
+            return False
 
         secretKey = User.SecretKey
        
@@ -81,7 +81,7 @@ class CheckPermission(permissions.BasePermission):
         print newSign
         print sign
         if newSign != sign:
-            return "HMAC Signature Match Failed"
+            return False
         
         return True
 
