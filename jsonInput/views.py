@@ -11,17 +11,18 @@ import hashlib
 import hmac
 import base64
 from django.db.models import Q
+import json
 
 # Create your views here.
 @api_view(['POST','GET'])
 def addData(request):
 
     permission = CheckPermission()
-
-    if permission.has_permission(request,None):
+    check = permission.has_permission(request,None)
+    if check == True:
         pass
     else:
-        raise PermissionDenied("You don't have permission to access")
+        raise PermissionDenied(check)
 
     if request.method == 'GET':
         snippets = payments.objects.all()
@@ -55,8 +56,7 @@ class CheckPermission(permissions.BasePermission):
             token = request.META['HTTP_ACCESSTOKEN']
 
         except Exception as e:
-            print e.message
-            return False
+            return "Headers Not present properly"
         
         try:
             User =  AccessKeys.objects.get(userId = uname, AccessToken = token)
@@ -64,21 +64,25 @@ class CheckPermission(permissions.BasePermission):
             User = None
 
         if User is None:
-            return False
+            return "Invalid userId / AccessToken"
 
         secretKey = User.SecretKey
        
+
         if request.method == 'GET':
             data = token
         else:
-            data = request.data
+            data = request.body
 
 
         newSign = MyHMAC(secretKey,data)
 
+        print data
+        print newSign
+        print sign
         if newSign != sign:
-            return False
-
+            return "HMAC Signature Match Failed"
+        
         return True
 
 
