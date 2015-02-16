@@ -22,7 +22,7 @@ def addData(request):
     if permission.has_permission(request,None) == True:
         pass
     else:
-        raise PermissionDenied("You don't have permission to access")
+        raise PermissionDenied("Permission Denied")
 
     if request.method == 'GET':
         snippets = payments.objects.all()
