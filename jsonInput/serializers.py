@@ -25,7 +25,7 @@ def bitCoinUrl(value):
     
 def alphaNumeric(value):
     regex = re.compile("^([A][0-9]+)$|^([B][A-Za-z]+)$")
-    if regex.match(value): 
+    if not (regex.match(value)): 
         raise serializers.ValidationError('Asset not in Proper Form.')
 
 class paymentSerializer(serializers.Serializer):
