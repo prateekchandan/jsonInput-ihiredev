@@ -47,17 +47,17 @@ class CheckPermission(permissions.BasePermission):
     CheckPermission
     """
     def has_permission(self, request, view):
-        #print request.META
+       
         try:
             sign = request.META['HTTP_AUTHORIZATION']
-            date = request.META['HTTP_DATE']
+            date = 1#request.META['HTTP_DATE']
             uname = request.META['HTTP_USERID']
             token = request.META['HTTP_ACCESSTOKEN']
 
         except Exception as e:
+            print e.message
             return False
         
-    
         try:
             User =  AccessKeys.objects.get(userId = uname, AccessToken = token)
         except Exception as e:
@@ -67,7 +67,11 @@ class CheckPermission(permissions.BasePermission):
             return False
 
         secretKey = User.SecretKey
-        data = request.data
+       
+        if request.method == 'GET':
+            data = token
+        else:
+            data = request.POST
 
         newSign = MyHMAC(secretKey,data)
 
