@@ -15,13 +15,17 @@ Authentication:
 	
 	In each request add the following headers:
 
-	X-Authorization
-	X-Date
+	Authorization
+	Date
+	Userid
+	accesstoken
 
-	X-Date is current UTC timestamp in seconds
-	X-Authorization is userId:accessToken:hmac_sha256_signature
+	Date is current UTC timestamp in seconds
+	Authorization is hmac_sha256_signature
+	userid is the userid of user
+	accesstoken is access token of user
 
-	hmac_sha256_signature is calculated as hmac sha256 of X-Date
+	hmac_sha256_signature is calculated as hmac sha256 of the data
 	Check this site for demo: http://www.freeformatter.com/hmac-generator.html
 
 3. For verifying authentication, 
