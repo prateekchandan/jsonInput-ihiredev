@@ -11,7 +11,7 @@ import os
 import sys
 import site
 #site.addsitedir('/root/Envs/jsonInput/lib/python2.7/site-packages')
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "jsonAPI.settings")
+os.environ["DJANGO_SETTINGS_MODULE"]= "jsonAPI.settings"
 
 path = 'root/ihiredev/jsonAPI'
 if path not in sys.path:

@@ -12,11 +12,13 @@ import hmac
 import base64
 from django.db.models import Q
 import json
+import pprint
 
 # Create your views here.
 @api_view(['POST','GET'])
 def addData(request):
-
+    logfile = open('/root/ihiredev/jsonInput/log.txt', 'a')
+    pprint.pprint(vars(request), logfile)
     permission = CheckPermission()
     
     if permission.has_permission(request,None) == True:
