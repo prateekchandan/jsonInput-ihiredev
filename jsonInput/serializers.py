@@ -36,7 +36,7 @@ class paymentSerializer(serializers.Serializer):
     sourceAddress = serializers.CharField()
     destinationAddress = serializers.CharField(max_length=1000,validators=[bitCoinUrl])
     asset = serializers.CharField(source='outAsset',validators = [alphaNumeric])
-    amount = serializers.IntegerField(source='outAmount')
+    amount = serializers.DecimalField(max_digits=16, decimal_places=8, source='outAmount')
     status = serializers.CharField(default='authorized' ,read_only=True)
     lastUpdatedBlockId = serializers.IntegerField(default=0,read_only=True)
 
